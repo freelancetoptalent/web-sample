@@ -90,20 +90,20 @@ exports.handler = async function(event, context) {
 
   if(event.body) {
       const {url} = JSON.parse(event.body)
-      try {
+      // try {
         const videoPath = await createVideo(url)
         console.log(videoPath)
         // const mp3Path = await convertMp3(videoPath)
         return {
           statusCode:200,
           body: JSON.stringify({videoPath})
-        }
-      } catch (error) {
-        console.log(error)
-        return {
-          statusCode:500,
+      //   }
+      // } catch (error) {
+      //   console.log(error)
+      //   return {
+      //     statusCode:500,
   
-        }
+      //   }
       }
       
      
