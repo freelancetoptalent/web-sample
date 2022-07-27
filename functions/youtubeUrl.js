@@ -63,7 +63,7 @@ async function createVideo(videoURL) {
     };
 
     // download video
-    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'lowestaudio'})
+    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'lowest'})
         .pipe(fs.createWriteStream(filePaths.videoFile));
     
     await new Promise((resolve, reject) => {
@@ -101,7 +101,7 @@ exports.handler = async function(event, context) {
       } catch (error) {
         console.log(error)
         return {
-          statusCode:400,
+          statusCode:500,
   
         }
       }
