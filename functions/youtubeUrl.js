@@ -10,23 +10,24 @@ const utils = require("./utils/utils")
 
 
 async function createVideo(url) {
-  return new Promise((resolve, reject) => {
+  // return new Promise((resolve, reject) => {
     const videoPath = path.join(__dirname, `../build/${utils.uniqId()}.mp4`)
 
     const dirPath = path.join(__dirname, `../build`)
     console.log( fs.readdirSync(dirPath))
     console.log(__dirname, "dirname")
-    const writeStream = fs.createWriteStream(videoPath);
+    // const writeStream = fs.createWriteStream(videoPath);
   
-    writeStream.on("error", (error) => reject(error));
-    writeStream.on("finish", () => {
-      console.log("finish")
-      resolve(videoPath);
-    })
-    ytdl(`${url}`)
-    .pipe(writeStream);
+    // writeStream.on("error", (error) => reject(error));
+    // writeStream.on("finish", () => {
+    //   console.log("finish")
+    //   resolve(videoPath);
+    // })
+    // ytdl(`${url}`)
+    // .pipe(writeStream);
+    return "ok"
   
-  })
+  // })
 
     // get video info using ytdl-core function
     // let videoInfo;
