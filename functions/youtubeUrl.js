@@ -15,12 +15,12 @@ exports.handler = async function(event, context) {
 
   if(event.body) {
       const {url} = JSON.parse(event.body)
-      const videoName = await createVideo(url)
+      //const videoName = await createVideo(url)
       console.log(videoName)
      
-    // return {
-    //   statusCode:200,
-    //   body: JSON.stringify({url})
-    // }
+    return {
+       statusCode:200,
+      body: JSON.stringify({url})
+     }
   }
 }
