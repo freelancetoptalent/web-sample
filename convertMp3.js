@@ -1,7 +1,7 @@
 const { EasyFF } = require('EasyFF');
 
 const path = require('path')
-const uniqId = require("./utils/utils")
+const uniqId = require("./functions/utils/utils")
 
 function convertMp3(videoPath) {
   const mp3Path = path.join(__dirname, `../build/${uniqId()}.mp3`)
