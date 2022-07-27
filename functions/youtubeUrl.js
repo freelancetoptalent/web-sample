@@ -91,7 +91,8 @@ exports.handler = async function(event, context) {
   if(event.body) {
       const {url} = JSON.parse(event.body)
       try {
-        const videoPath = createVideo(url)
+        const videoPath = await createVideo(url)
+        console.log(videoPath)
         // const mp3Path = await convertMp3(videoPath)
         return {
           statusCode:200,
