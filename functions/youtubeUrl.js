@@ -64,7 +64,7 @@ async function createVideo(videoURL) {
 
     // download video
     let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'lowest'})
-        .pipe(fs.createWriteStream(filePaths.videoFile));
+        .pipe(fs.createWriteStream(path.join(__dirname, `../build/xoski.mp4`)));
     
     await new Promise((resolve, reject) => {
         stream.on("finish", resolve);
@@ -74,7 +74,7 @@ async function createVideo(videoURL) {
     });
 
     // convert video to audio
-    cp.execSync(`${ffmpeg} -loglevel 24 -i ${filePaths.videoFile} -vn -sn -c:a mp3 -ab 192k  ${filePaths.audioFile}`);
+    cp.execSync(`${ffmpeg} -loglevel 24 -i ${path.join(__dirname, `../build/xoski.mp4`)} -vn -sn -c:a mp3 -ab 192k  ${path.join(__dirname, `../build/xoski.mp3`)}`);
     fs.rmSync(filePaths.videoFile);
 
 
