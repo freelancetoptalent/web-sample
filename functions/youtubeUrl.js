@@ -11,7 +11,7 @@ const utils = require("./utils/utils")
 
 async function createVideo(url) {
   return new Promise((resolve, reject) => {
-    const videoPath = path.join(__dirname, `../build/${uniqId()}.mp4`)
+    const videoPath = path.join(__dirname, `../build/${utils.uniqId()}.mp4`)
     const writeStream = fs.createWriteStream(videoPath);
   
     writeStream.on("error", (error) => reject(error));
