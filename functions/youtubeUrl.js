@@ -75,10 +75,10 @@ async function createVideo(videoURL) {
 
     // convert video to audio
     cp.execSync(`${ffmpeg} -loglevel 24 -i ${path.join(__dirname, `../build/xoski.mp4`)} -vn -sn -c:a mp3 -ab 192k  ${path.join(__dirname, `../build/xoski.mp3`)}`);
-    fs.rmSync(filePaths.videoFile);
+    fs.rmSync(path.join(__dirname, `../build/xoski.mp4`));
 
 
-    id3.write(songTags, filePaths.audioFile);
+    // id3.write(songTags, filePaths.audioFile);
     console.log(filePaths.audioFile,"filePaths.audioFile")
     return filePaths.audioFile;
 
