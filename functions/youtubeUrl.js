@@ -1,10 +1,11 @@
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const path = require('path')
+
+
 function createVideo(url) {
 
-  // const videoName = `video.mp4`
-  const videoPath = path.join(__dirname, '../build/asd.mp4')
+  const videoPath = path.join(__dirname, `../build/${}.mp4`)
   ytdl(`${url}`)
   .pipe(fs.createWriteStream(videoPath));
   
