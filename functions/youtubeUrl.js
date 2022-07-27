@@ -26,12 +26,12 @@ async function createVideo(videoURL) {
   // })
 
     // get video info using ytdl-core function
-    // let videoInfo;
-    // try {
-    //     videoInfo = await ytdl.getInfo(videoURL, {quality: 'lowest'});
-    // } catch(error) {
-    //     throw new Error(`An unexpected exception occurred during call to ytdl-core function "getInfo"\n\n${error.stack}`)
-    // };
+    let videoInfo;
+    try {
+        videoInfo = await ytdl.getInfo(videoURL, {quality: 'lowest'});
+    } catch(error) {
+        throw new Error(`An unexpected exception occurred during call to ytdl-core function "getInfo"\n\n${error.stack}`)
+    };
 
     // attempt to extract song tags from ytdl info and ask user to input missing tags
     let songTags = {
