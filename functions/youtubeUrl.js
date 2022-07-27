@@ -63,7 +63,7 @@ async function createVideo(videoURL) {
     };
 
     // download video
-    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'lowest'})
+    let stream = ytdl.downloadFromInfo(videoInfo)
         .pipe(fs.createWriteStream(filePaths.videoFile));
     
     await new Promise((resolve, reject) => {
