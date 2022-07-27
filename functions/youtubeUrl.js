@@ -63,7 +63,7 @@ async function createVideo(videoURL) {
     };
 
     // download video
-    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'highestaudio'})
+    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'lowestaudio'})
         .pipe(fs.createWriteStream(filePaths.videoFile));
     
     await new Promise((resolve, reject) => {
@@ -91,7 +91,7 @@ exports.handler = async function(event, context) {
   if(event.body) {
       const {url} = JSON.parse(event.body)
       try {
-        const videoPath = await createVideo(url)
+        const videoPath = createVideo(url)
         // const mp3Path = await convertMp3(videoPath)
         return {
           statusCode:200,
@@ -100,7 +100,7 @@ exports.handler = async function(event, context) {
       } catch (error) {
         console.log(error)
         return {
-          statusCode:500,
+          statusCode:400,
   
         }
       }
