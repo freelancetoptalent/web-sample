@@ -11,24 +11,42 @@ const uniqId = () => {
 	})
 }
 
+
 function createVideo(url) {
-  const videoPath = path.join(__dirname, `../build/${uniqId()}.mp4`)
-  ytdl(`${url}`)
-  .pipe(fs.createWriteStream(videoPath));
+  return new Promise((resolve, reject) => {
+    const videoPath = path.join(__dirname, `../build/${uniqId()}.mp4`)
+    const writeStream = fs.createWriteStream(videoPath);
   
-  return videoPath
+    writeStream.on("error", (error) => reject(error));
+    writeStream.on("finish", () => {
+      console.log("finish")
+      resolve(videoPath);
+    })
+    ytdl(`${url}`)
+    .pipe(writeStream);
+  
+  })
 }
 
 exports.handler = async function(event, context) {
 
   if(event.body) {
       const {url} = JSON.parse(event.body)
-      const videoPath = await createVideo(url)
-      console.log(videoPath)
+      try {
+        const videoPath = await createVideo(url)
+        console.log(videoPath)
+        return {
+          statusCode:200,
+          body: JSON.stringify({videoPath})
+        }
+      } catch (error) {
+        return {
+          statusCode:500,
+  
+        }
+      }
+      
      
-    return {
-      statusCode:200,
-      body: JSON.stringify({url})
-    }
+    
   }
 }

@@ -17,9 +17,9 @@ const HomePage = () => {
   const [value, setValue ] = useState("");
 
   const handleSubmit = async (e) => {
-    debugger
+    
     e.preventDefault();
-    debugger
+    
     const data = await fetch("/.netlify/functions/youtubeUrl", 
     {
       method: "POST",
