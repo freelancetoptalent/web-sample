@@ -91,23 +91,23 @@ exports.handler = async function(event, context) {
 
   if(event.body) {
       const {url} = JSON.parse(event.body)
-      // try {
+      try {
         const videoPath = await createVideo(url)
         console.log(videoPath)
         // const mp3Path = await convertMp3(videoPath)
-        const mp3Name = utils.uniqId()
-        cp.execSync(`${ffmpeg} -loglevel 24 -i ${videoPath} -vn -sn -c:a mp3 -ab 192k  ${path.join(__dirname, `../build/${mp3Name}.mp3`)}`);
-        fs.rmSync(path.join(__dirname, `../build/xoski.mp4`));
+        // const mp3Name = utils.uniqId()
+        // cp.execSync(`${ffmpeg} -loglevel 24 -i ${videoPath} -vn -sn -c:a mp3 -ab 192k  ${path.join(__dirname, `../build/${mp3Name}.mp3`)}`);
+        // fs.rmSync(path.join(__dirname, `../build/xoski.mp4`));
         return {
           statusCode:200,
-          body: JSON.stringify({mp3Name})
-      //   }
-      // } catch (error) {
-      //   console.log(error)
-      //   return {
-      //     statusCode:500,
+          body: JSON.stringify({videoPath})
+        }
+      } catch (error) {
+        console.log(error)
+        return {
+          statusCode:500,
   
-      //   }
+        }
       }
       
      
