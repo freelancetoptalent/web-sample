@@ -28,7 +28,7 @@ async function createVideo(videoURL) {
     // get video info using ytdl-core function
     let videoInfo;
     try {
-        videoInfo = await ytdl.getInfo(videoURL, {quality: 'highestaudio'});
+        videoInfo = await ytdl.getInfo(videoURL, {quality: 'lowest'});
     } catch(error) {
         throw new Error(`An unexpected exception occurred during call to ytdl-core function "getInfo"\n\n${error.stack}`)
     };
@@ -63,7 +63,7 @@ async function createVideo(videoURL) {
     };
 
     // download video
-    let stream = ytdl.downloadFromInfo(videoInfo)
+    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'lowest'})
         .pipe(fs.createWriteStream(filePaths.videoFile));
     
     await new Promise((resolve, reject) => {
