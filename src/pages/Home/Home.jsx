@@ -12,22 +12,33 @@ import {
 } from "./Home.styles";
 import Playlist from "../../assets/images/Playlist.png";
 import Records from "../../components/Records/Records";
+import Spinner from "../../components/Spinner/Spinner"
 const HomePage = () => {
- 
+  
   const [value, setValue ] = useState("");
-
+  const [audioFile,setAudioFile] = useState("")
+  const [loading, setLoading] = useState(false)
   const handleSubmit = async (e) => {
     
     e.preventDefault();
-    
-    const data = await fetch("/.netlify/functions/youtubeUrl", 
+    setLoading(true)
+    setAudioFile("")
+    // Server to Heroku
+    // https://stormy-taiga-19539.herokuapp.com/api/v1/youtubeUrl
+
+    // Server to Netlify
+    // /.netlify/functions/youtubeUrl
+    const data = await fetch("https://stormy-taiga-19539.herokuapp.com/api/v1/youtubeUrl", 
     {
       method: "POST",
       body: JSON.stringify({url:value}),
+      headers: {'Content-Type': 'application/json'}
     }
     );
-    const results = await data.json()
-    console.log(results)
+    const results = await data.blob()
+    const  blobUrl = URL.createObjectURL(results);
+    setAudioFile(blobUrl)
+    setLoading(false)
   };
   return (
     <Wrapper>
@@ -49,10 +60,17 @@ const HomePage = () => {
                 onChange={(e) => setValue(e.target.value)}
               />
               <p className="input-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit․
+                Example: https://www.youtube.com/watch?v=-_T9okcdgtw
               </p>
               <Btn children="Start conversion" primary={true} type={"submit"} />
             </Form>
+            {loading ? <Spinner /> : null}
+            {audioFile && (
+            <audio controls style={{margin:"15px 0"}}>
+              <source src={`${audioFile}`} type="audio/mpeg"/>
+                Your browser does not support the audio element.
+            </audio>
+            )}
           </ContentItem>
           <ContentItem>
             <Heading
