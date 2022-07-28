@@ -39,6 +39,7 @@ const HomePage = () => {
     const  blobUrl = URL.createObjectURL(results);
     setAudioFile(blobUrl)
     setLoading(false)
+    setValue("")
   };
   return (
     <Wrapper>
