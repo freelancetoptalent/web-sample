@@ -9,6 +9,7 @@ import {
   Text,
   Wrapper,
   Form,
+  Error,
 } from "./Home.styles";
 import Playlist from "../../assets/images/Playlist.png";
 import Records from "../../components/Records/Records";
@@ -17,18 +18,28 @@ const HomePage = () => {
   
   const [value, setValue ] = useState("");
   const [audioFile,setAudioFile] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMsg,setErrorMsg] = useState("") 
+
+  const matchYoutubeUrl = (url) => {
+    const reg = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+    const matches = url.match(reg)
+    return matches ? true : false
+  }
+  const handleError = (isValied) => {
+    if(!isValied) setErrorMsg("Your Youtube URL Incorrect")
+  
+  }
   const handleSubmit = async (e) => {
-    
-    e.preventDefault();
-    setLoading(true)
+    setIsLoading(true)
     setAudioFile("")
+    setErrorMsg("")
     // Server to Heroku
     // https://stormy-taiga-19539.herokuapp.com/api/v1/youtubeUrl
 
     // Server to Netlify
     // /.netlify/functions/youtubeUrl
-    const data = await fetch("https://stormy-taiga-19539.herokuapp.com/api/v1/youtubeUrl", 
+    const data = await fetch("http://localhost:3001/api/v1/youtubeUrl", 
     {
       method: "POST",
       body: JSON.stringify({url:value}),
@@ -38,8 +49,9 @@ const HomePage = () => {
     const results = await data.blob()
     const  blobUrl = URL.createObjectURL(results);
     setAudioFile(blobUrl)
-    setLoading(false)
+    setIsLoading(false)
     setValue("")
+    
   };
   return (
     <Wrapper>
@@ -52,8 +64,15 @@ const HomePage = () => {
               music is well known to increase well-being, is often said to sound
               better, be more harmonic, and have transcendental powers.
             </Text>
-            <Form onSubmit={(e)=> handleSubmit(e)}>
+            <Form onSubmit={(e)=> {
+              e.preventDefault();
+              const matchRes = matchYoutubeUrl(value)
+              debugger
+              matchRes ? handleSubmit() : handleError(matchRes)
+             
+              }}>
               <label>Remote URL</label>
+              {errorMsg ? <Error>{errorMsg}</Error> : null}
               <input
                 type="text"
                 placeholder="https://"
@@ -65,7 +84,7 @@ const HomePage = () => {
               </p>
               <Btn children="Start conversion" primary={true} type={"submit"} />
             </Form>
-            {loading ? <Spinner /> : null}
+            {isLoading ? <Spinner /> : null}
             {audioFile && (
             <audio controls style={{margin:"15px 0"}}>
               <source src={`${audioFile}`} type="audio/mpeg"/>

@@ -1,5 +1,17 @@
-import styled from "styled-components";
+import styled,{keyframes} from "styled-components";
 import {device} from "../../themes/Breakpoints"
+
+
+
+const animateOpacity = keyframes`
+  0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -36,10 +48,9 @@ export const ContentItem = styled.div`
 
 
 export const Form = styled.form`
-  
+  position: relative;
   label {
-    display: block;
-    width: 100%;
+    display: inline-block;
     color: #0F283D;
     font-weight: 700;
     font-size: 18px;
@@ -76,5 +87,14 @@ export const Text = styled.p`
   font-size: 18px;
   line-height: 28px;
   margin-bottom: 28px;
-
 `;
+
+export const Error = styled.span`
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 700;
+  color: red;
+  margin-left: 15px;
+  animation: 1s ease 0s 1 normal none running ${animateOpacity};
+
+`
