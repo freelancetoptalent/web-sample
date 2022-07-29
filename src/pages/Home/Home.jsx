@@ -39,7 +39,7 @@ const HomePage = () => {
 
     // Server to Netlify
     // /.netlify/functions/youtubeUrl
-    const data = await fetch("http://localhost:3001/api/v1/youtubeUrl", 
+    const data = await fetch("https://stormy-taiga-19539.herokuapp.com/api/v1/youtubeUrl", 
     {
       method: "POST",
       body: JSON.stringify({url:value}),
